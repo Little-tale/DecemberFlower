@@ -6,8 +6,8 @@
 //
 
 import Foundation
-@preconcurrency import TCACoordinators
 import ComposableArchitecture
+@preconcurrency import TCACoordinators
 
 @Reducer(state: .equatable)
 enum RootScreen {
@@ -38,6 +38,13 @@ struct RootCoordinator: Reducer {
         
         Reduce { state, action in
             switch action {
+            case let .router(.routeAction(id: _, action: .onboarding(.delegate(.isFirstUser(trigger))))):
+                if trigger {
+                    state.routes.push(.onboarding(OnboardingViewFeature.State()))
+                } else {
+                    state.viewState = .home
+                }
+                
             default:
                 break
             }

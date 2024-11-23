@@ -39,7 +39,6 @@ struct RootCoordinatorView: View {
 }
 
 extension RootScreen.State: Identifiable {
-    
     var id: ID {
         switch self {
         case .onboarding:
@@ -54,5 +53,4 @@ extension RootScreen.State: Identifiable {
             return self
         }
     }
-    
 }

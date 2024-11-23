@@ -11,14 +11,19 @@ import ComposableArchitecture
 @Reducer
 struct OnboardingViewFeature: _Reducer {
     
-    struct State {
-        
+    struct State: Equatable {
+        let isFirstUser = false
     }
     
     enum Action {
         case viewCycle(ViewCycleType)
         case viewEvent(ViewEventType)
         case dataTrans(DataTransType)
+        
+        case delegate(Delegate)
+        enum Delegate {
+            case isFirstUser(Bool)
+        }
     }
     
     enum ViewCycleType {
@@ -26,7 +31,7 @@ struct OnboardingViewFeature: _Reducer {
     }
     
     enum ViewEventType {
-        case none
+        case buttonTapped
     }
     
     enum DataTransType {
@@ -36,6 +41,14 @@ struct OnboardingViewFeature: _Reducer {
     var body: some ReducerOf<Self> {
         Reduce { state, action in
             switch action {
+            case .viewCycle(.onAppear):
+                UserDefaultsManager.isFirst = false
+                
+            case .viewEvent(.buttonTapped):
+                // button 클릭시 Delegate로 UserDefault값 변경
+                return .run { [state = state] send in
+                    await send(.delegate(.isFirstUser(state.isFirstUser)))
+                }
                 
             default:
                 break
