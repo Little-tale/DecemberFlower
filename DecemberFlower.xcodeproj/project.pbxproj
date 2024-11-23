@@ -20,9 +20,22 @@
 		7BB376012CF1ABE10065EE7F /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		DF0A655D2CF1E63100E94C78 /* Exceptions for "DecemberFlower" folder in "DecemberFlower" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 7BB375ED2CF1AB880065EE7F /* DecemberFlower */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		7BB375F02CF1AB880065EE7F /* DecemberFlower */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				DF0A655D2CF1E63100E94C78 /* Exceptions for "DecemberFlower" folder in "DecemberFlower" target */,
+			);
 			path = DecemberFlower;
 			sourceTree = "<group>";
 		};
@@ -284,6 +297,7 @@
 				DEVELOPMENT_TEAM = H25F4B7J4U;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = DecemberFlower/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -318,6 +332,7 @@
 				DEVELOPMENT_TEAM = H25F4B7J4U;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = DecemberFlower/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
