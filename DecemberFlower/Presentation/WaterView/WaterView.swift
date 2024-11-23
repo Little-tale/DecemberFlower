@@ -11,4 +11,11 @@ import ComposableArchitecture
 
 struct WaterView: View {
     
+    @Perception.Bindable var store: StoreOf<WaterViewFeature>
+    
+    var body: some View {
+        VStack {
+            
+        }
+    }
 }
