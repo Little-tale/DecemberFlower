@@ -15,7 +15,34 @@ struct WaterView: View {
     
     var body: some View {
         VStack {
+            waterInfoView
             
+            Text("마시기")
+                .asButton {
+                    
+                }
         }
     }
 }
+
+extension WaterView {
+    
+    private var waterInfoView: some View {
+        HStack {
+            Text("물")
+            
+            Text(String(store.currentWaterCount))
+            
+            Text("잔")
+        }
+    }
+    
+}
+
+#if DEBUG
+#Preview {
+    WaterView(store: Store(initialState: WaterViewFeature.State(), reducer: {
+        WaterViewFeature()
+    }))
+}
+#endif

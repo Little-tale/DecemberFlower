@@ -13,7 +13,7 @@ struct WaterViewFeature: _Reducer {
    
     @ObservableState
     struct State {
-        
+        var currentWaterCount = 1
     }
     
     enum Action {
