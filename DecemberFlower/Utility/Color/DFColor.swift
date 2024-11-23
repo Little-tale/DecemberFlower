@@ -31,6 +31,7 @@ enum DFColor {
         case gray300
         case gray200
         case gray100
+        case textView
         
         var color: UIColor {
             switch self {
@@ -40,10 +41,23 @@ enum DFColor {
                 return UIColor(hexCode: "E9EAEA")
             case .gray100:
                 return UIColor(hexCode: "FBFBFB")
+            case .textView:
+                return UIColor(hexCode: "404040")
             }
         }
     }
     
+    enum PointColor {
+        case point1
+        
+        
+        var color: UIColor {
+            switch self {
+            case .point1:
+                return UIColor(hexCode: "D72E42")
+            }
+        }
+    }
 }
 
 
