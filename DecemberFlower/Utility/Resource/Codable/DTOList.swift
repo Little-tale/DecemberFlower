@@ -9,7 +9,7 @@ import Foundation
 
 struct DTOList<D: DTO>: DTO {
     
-    let elements: [D]
+    let challengeList: [D]
     
     init(from decoder: any Decoder) throws {
         var container = try decoder.unkeyedContainer()
@@ -18,6 +18,6 @@ struct DTOList<D: DTO>: DTO {
             let element = try container.decode(D.self)
             elements.append(element)
         }
-        self.elements = elements
+        self.challengeList = elements
     }
 }

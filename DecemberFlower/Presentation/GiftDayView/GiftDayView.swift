@@ -15,38 +15,44 @@ struct GiftDayView: View {
     var gridItems: [GridItem] = [GridItem(.flexible())]
     
     var body: some View {
-        ZStack {
-            ScrollView {
-                VStack {
-                    topView
-                        .padding(.horizontal, 16)
-                        .padding(.top, 30)
-                        .padding(.bottom, 10)
-                    
-                    HStack(alignment: .top) {
-                        LazyVGrid(columns: gridItems) {
-                            randomMode(bool: true)
-                        }
-                        LazyVGrid(columns: gridItems) {
-                            randomMode(bool: false)
+        WithPerceptionTracking {
+            ZStack {
+                ScrollView {
+                    VStack {
+                        topView
+                            .padding(.horizontal, 16)
+                            .padding(.top, 30)
+                            .padding(.bottom, 10)
+                        
+                        HStack(alignment: .top) {
+                            LazyVGrid(columns: gridItems) {
+                                randomMode(bool: true)
+                            }
+                            LazyVGrid(columns: gridItems) {
+                                randomMode(bool: false)
+                            }
                         }
                     }
+                    Color.clear
+                        .padding(.bottom, 100)
                 }
                 Color.clear
-                    .padding(.bottom, 100)
+                    .bottomShadow
+                    .allowsHitTesting(false)
             }
-            Color.clear
-                .bottomShadow
-                .allowsHitTesting(false)
-        }
-        .background {
-            ZStack {
-                Image(.background)
-                    .resizable()
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .onAppear {
+                store.send(.viewCycle(.onAppear))
             }
-            .ignoresSafeArea(.all)
+            .background {
+                ZStack {
+                    Image(.background)
+                        .resizable()
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                }
+                .ignoresSafeArea(.all)
+            }
         }
+     
     }
 }
 
@@ -82,21 +88,20 @@ extension GiftDayView {
         
         return ForEach( bool ? sideCount.0 : sideCount.1 , id: \.self) { index in
             ZStack {
-                randomImage
+                randomImage(num: store.state.datas[index].randomNum)
                     .padding(.all, 10)
                 .asButton {
-                    
+                    store.send(.viewEvent(.touchBox(index)))
                 }
-                Text(store.state.datas[index - 1].title)
+                Text(String(index))
             }
         }
     }
     
-    private var randomImage: some View {
-        let randomImageNumber = Int.random(in: 1...4)
+    private func randomImage(num: Int) -> some View {
         
         return Group {
-            if let caseOf = BoxImages(rawValue: randomImageNumber) {
+            if let caseOf = BoxImages(rawValue: num) {
                 caseOf.image
                     .resizable()
                     .aspectRatio(contentMode: .fit)
@@ -112,6 +117,9 @@ extension GiftDayView {
         var odds: [Int] = []
         var evens: [Int] = []
         
+        if total == 0 {
+            return (odds, evens)
+        }
         for i in 1...total {
             if i % 2 == 0 {
                 evens.append(i) // 짝수일 때

@@ -13,7 +13,7 @@ struct GiftDayViewFeature: _Reducer {
     
     @ObservableState
     struct State: Equatable {
-        var datas: [PurposeEntity] = Array(repeating: PurposeEntity(title: "", detail: ""), count: 31)
+        var datas: [PurposeEntity] = []
     }
     
     enum Action {
@@ -24,7 +24,7 @@ struct GiftDayViewFeature: _Reducer {
         
         case delegate(Delegate)
         enum Delegate {
-            case touchBox
+            case touchBox(PurposeEntity)
         }
     }
     
@@ -33,10 +33,12 @@ struct GiftDayViewFeature: _Reducer {
     }
     
     enum ViewEventType {
+        case touchBox(Int)
         case none
     }
     
     enum DataTransType {
+        case emptyData
         case giftDatas([PurposeEntity])
     }
     
@@ -51,7 +53,13 @@ struct GiftDayViewFeature: _Reducer {
             switch action {
             case .viewCycle(.onAppear):
                 return .run { send in
+                    await send(.dataTrans(.emptyData))
                     await send(.network(.giftDatas))
+                }
+                
+            case let .viewEvent(.touchBox(index)):
+                return .run { [state = state] send in
+                    await send(.delegate(.touchBox(state.datas[index])))
                 }
                 
             case .network(.giftDatas):
@@ -61,8 +69,18 @@ struct GiftDayViewFeature: _Reducer {
                     await send(.dataTrans(.giftDatas(data)))
                 }
                 
-            case let .dataTrans(.giftDatas(data)):
-                state.datas = data
+            case .dataTrans(.emptyData):
+                var items: [PurposeEntity] = []
+                
+                for index in 1...31 {
+                    items.append(PurposeEntity(title: "", details: "", number: index, isValid: false, createdAt: Date()))
+                }
+                state.datas = items
+                
+            case let .dataTrans(.giftDatas(datas)):
+                for data in datas {
+                    state.datas[data.number-1] = data
+                }
                 
             default:
                 break

@@ -57,73 +57,84 @@ struct ChallengeView: View {
     let characterLimit = 300 // 문자 제한
     
     var body: some View {
-        ScrollView {
-            
-            VStack {
-                HStack {
-                    Text(DFText.ChallengeText.setPurpose)
-                        .font(style: .moneygraphy, size: 36)
-                    Spacer()
-                }
-                .padding(.leading, 10)
-                .padding(.bottom, 15)
-                .foregroundStyle(.white)
+        WithPerceptionTracking {
+            ScrollView {
                 
-                ForEach(TextViewCase.allCases, id: \.self) { textViewCase in
-                    
-                    HStack {
-                        Text(textViewCase.title)
-                            .font(style: .moneygraphy, size: 18)
-                        Spacer()
-                    }
-                    .foregroundStyle(.white)
-                    .padding(.leading, 10)
-                    .padding(.vertical, 3)
-                    
-                    switch textViewCase {
-                    case .title:
-                        DFTextView(text: $store.titleText.sending(\.titleTextBinding), backgroundColor: Color(DFColor.GrayColor.textView.color), placeHolder: textViewCase.placeHolder)
-                            .frame(height: 200)
-                            .clipShape(RoundedRectangle(cornerRadius: 10))
-                            .padding(.horizontal, 10)
-                    
-                        bottomView(current: textViewCase)
-                            .foregroundStyle(store.state.titleIsValid ? .clear : .red)
-                    case .detail:
-                        DFTextView(text: $store.detailText.sending(\.detailTextBinding), backgroundColor: Color(DFColor.GrayColor.textView.color), placeHolder: textViewCase.placeHolder)
-                            .frame(height: 200)
-                            .clipShape(RoundedRectangle(cornerRadius: 10))
-                            .padding(.horizontal, 10)
+                WithPerceptionTracking {
+                    VStack {
+                        HStack {
+                            Text(DFText.ChallengeText.setPurpose)
+                                .font(style: .moneygraphy, size: 36)
+                            Spacer()
+                        }
+                        .padding(.leading, 10)
+                        .padding(.bottom, 15)
+                        .foregroundStyle(.white)
                         
-                        bottomView(current: textViewCase)
-                            .foregroundStyle(store.state.titleIsValid ? .clear : .red)
+                        ForEach(TextViewCase.allCases, id: \.self) { textViewCase in
+                            
+                            HStack {
+                                Text(textViewCase.title)
+                                    .font(style: .moneygraphy, size: 18)
+                                Spacer()
+                            }
+                            .foregroundStyle(.white)
+                            .padding(.leading, 10)
+                            .padding(.vertical, 3)
+                            
+                            switch textViewCase {
+                            case .title:
+                                DFTextView(text: $store.titleText.sending(\.titleTextBinding), backgroundColor: Color(DFColor.GrayColor.textView.color), placeHolder: textViewCase.placeHolder)
+                                    .frame(height: 200)
+                                    .clipShape(RoundedRectangle(cornerRadius: 10))
+                                    .padding(.horizontal, 10)
+                            
+                                bottomView(current: textViewCase)
+                                    .foregroundStyle(store.state.titleIsValid ? .clear : .red)
+                            case .detail:
+                                DFTextView(text: $store.detailText.sending(\.detailTextBinding), backgroundColor: Color(DFColor.GrayColor.textView.color), placeHolder: textViewCase.placeHolder)
+                                    .frame(height: 200)
+                                    .clipShape(RoundedRectangle(cornerRadius: 10))
+                                    .padding(.horizontal, 10)
+                                
+                                bottomView(current: textViewCase)
+                                    .foregroundStyle(store.state.titleIsValid ? .clear : .red)
+                            }
+                            
+                            
+                        }
                     }
                     
-                    
+                    VStack {
+                        Text(DFText.ChallengeText.completePurpose)
+                            .font(style: .moneygraphy, size: 18)
+                            .foregroundStyle(store.allIsValid ? .white : .gray) // 조건에 따른 색 변경알아서
+                    }
+                    .frame(maxWidth: .infinity)
+                    .frame(height: 50)
+        //            .background(DFColor.PointColor.point1) // 조건에 따른 색 변경알아서
+                    .background(Color(DFColor.PointColor.point1.color))
+                    .clipShape(RoundedRectangle(cornerRadius: 8))
+                    .padding(.horizontal, 10)
+                }
+                
+                
+            }
+            .onAppear {
+                store.send(.viewCycle(.onAppear))
+            }
+            .background {
+                WithPerceptionTracking {
+                    ZStack {
+                        Image(.background)
+                            .resizable()
+                            .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    }
+                    .ignoresSafeArea(.all)
                 }
             }
-            
-            VStack {
-                Text(DFText.ChallengeText.completePurpose)
-                    .font(style: .moneygraphy, size: 18)
-                    .foregroundStyle(store.allIsValid ? .white : .gray) // 조건에 따른 색 변경알아서
-            }
-            .frame(maxWidth: .infinity)
-            .frame(height: 50)
-//            .background(DFColor.PointColor.point1) // 조건에 따른 색 변경알아서
-            .background(Color(DFColor.PointColor.point1.color))
-            .clipShape(RoundedRectangle(cornerRadius: 8))
-            .padding(.horizontal, 10)
-            
         }
-        .background {
-            ZStack {
-                Image(.background)
-                    .resizable()
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-            }
-            .ignoresSafeArea(.all)
-        }
+        
     }
     
     

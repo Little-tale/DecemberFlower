@@ -26,7 +26,7 @@ extension GiftDayRouter {
     var path: String {
         switch self {
         case .fetchPurposeList, .pushPurpose:
-            return ""
+            return "challenges/challengeAll"
         }
     }
     

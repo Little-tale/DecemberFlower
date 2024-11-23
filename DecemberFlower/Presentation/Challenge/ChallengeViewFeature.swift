@@ -13,6 +13,8 @@ struct ChallengeViewFeature: _Reducer {
     
     @ObservableState
     struct State: Equatable {
+        var purposeData: PurposeEntity
+        
         var titleText: String = ""
         var detailText: String = ""
         
@@ -60,11 +62,16 @@ struct ChallengeViewFeature: _Reducer {
     var body: some ReducerOf<Self> {
         Reduce { state, action in
             switch action {
-                
-            case .viewEvent(.buttonTapped):
-                return .run { [state = state] send in
-                    try await giftDayRepository.pushPurpose(data: PurposeEntity(title: state.titleText, detail: state.detailText))
+            case .viewCycle(.onAppear):
+                // isFirst인지
+                // 이 사람이 진행중인지? 실패인지?
+                return .run { send in
+                    let data = try await giftDayRepository.fetchPurposeList()
                 }
+//            case .viewEvent(.buttonTapped):
+//                return .run { [state = state] send in
+//                    try await giftDayRepository.pushPurpose(data: PurposeEntity(title: state.titleText, detail: state.detailText, number: 0))
+//                }
                 
             case let .titleTextBinding(text):
                 state.titleText = limitText(to: text, limit: state.titleLimit)

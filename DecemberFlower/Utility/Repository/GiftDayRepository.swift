@@ -14,9 +14,9 @@ final class GiftDayRepository: @unchecked Sendable {
 
 extension GiftDayRepository {
     func fetchPurposeList() async throws -> [PurposeEntity] {
-        let data = try await network.requestNetwork(dto: DTOList<PurposeDTO>.self, router: GiftDayRouter.fetchPurposeList)
+        let data = try await network.requestNetwork(dto: PurposeDataDTO.self, router: GiftDayRouter.fetchPurposeList)
         
-        return dtoToEntity(data.elements)
+        return dtoToEntity(data.data.challengeList)
     }
     
     func pushPurpose(data: PurposeEntity) async throws {
@@ -30,7 +30,7 @@ extension GiftDayRepository {
     }
     
     private func dtoToEntity(_ dto: PurposeDTO) -> PurposeEntity {
-        return PurposeEntity(title: dto.title, detail: dto.detail)
+        return PurposeEntity(title: dto.title, details: dto.details, number: dto.number, isValid: dto.status == "FAIL" ? false : true, first: false, createdAt: DateManager.shared.toDate(dto.createdAt) ?? Date())
     }
 }
 

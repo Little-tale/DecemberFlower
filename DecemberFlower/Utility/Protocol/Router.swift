@@ -23,8 +23,7 @@ protocol Router {
 extension Router {
     
     var baseURL: String {
-//        return SecretConst.baseURLString
-        return ""
+        return "http://43.201.232.60:8080/"
     }
     
     var headers: HTTPHeaders {

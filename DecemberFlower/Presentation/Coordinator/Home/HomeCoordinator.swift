@@ -33,6 +33,9 @@ struct HomeCoordinator: Reducer {
         
         Reduce { state, action in
             switch action {
+            case let .router(.routeAction(id: .giftDay, action: .giftDay(.delegate(.touchBox(data))))):
+                state.routes.push(.challenge(ChallengeViewFeature.State(purposeData: data)))
+                
             default:
                 break
             }
