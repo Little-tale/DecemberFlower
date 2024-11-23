@@ -38,6 +38,11 @@ struct ChallengeViewFeature: _Reducer {
         // binding
         case titleTextBinding(String)
         case detailTextBinding(String)
+        
+        case delegate(Delegate)
+        enum Delegate {
+            case makeSuccess(Bool)
+        }
     }
     
     enum ViewCycleType {
@@ -65,18 +70,27 @@ struct ChallengeViewFeature: _Reducer {
             case .viewCycle(.onAppear):
                 // isFirst인지
                 // 이 사람이 진행중인지? 실패인지?
-                return .run { send in
-                    let data = try await giftDayRepository.fetchPurposeList()
+                return .run { [state = state] send in
+                    let datas = try await giftDayRepository.fetchPurposeList()
+                    
+//                    for purpose in datas {
+////                        if purpose.
+//                    }
                 }
-//            case .viewEvent(.buttonTapped):
-//                return .run { [state = state] send in
-//                    try await giftDayRepository.pushPurpose(data: PurposeEntity(title: state.titleText, detail: state.detailText, number: 0))
-//                }
+            case .viewEvent(.buttonTapped):
+                return .run { [state = state] send in
+                    let result = try await giftDayRepository.pushPurpose(data: PurposeEntity(title: state.titleText, details: state.detailText, number: 0, isValid: false, createdAt: Date()))
+                    
+                    await send(.delegate(.makeSuccess(result)))
+                }
                 
             case let .titleTextBinding(text):
                 state.titleText = limitText(to: text, limit: state.titleLimit)
                 state.titleCount = calculateCharacterCount(for: state.titleText)
                 state.titleIsValid = state.titleCount <= state.titleLimit
+                if state.titleCount == 0 {
+                    state.titleIsValid = false
+                }
                 
                 state.allIsValid = (state.titleIsValid && state.detailIsValid == true)
                 
@@ -86,6 +100,10 @@ struct ChallengeViewFeature: _Reducer {
                 state.detailIsValid = state.detailCount <= state.detailLimit
                 
                 state.allIsValid = (state.titleIsValid && state.detailIsValid == true)
+                
+                if state.detailCount == 0 {
+                    state.detailIsValid = false
+                }
 
             default:
                 break

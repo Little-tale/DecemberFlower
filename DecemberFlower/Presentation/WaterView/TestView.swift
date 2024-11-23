@@ -11,6 +11,7 @@ struct RandomTextBoxAnimationView: View {
     let count: Int
     @State private var finalCount: [ItemModel] = []
     @State private var isAnimating = AnimationType.start
+    @State private var animating = false
     
     @State var boo: Bool = false
     
@@ -24,64 +25,87 @@ struct RandomTextBoxAnimationView: View {
         VStack {
             ZStack {
                 randomView
-                
-                VStack {
-                    
-                }
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                
-                
-            }
-            .overlay {
-                ZStack(alignment: .bottom) {
+                if !animating {
                     VStack {
-                        
                         HStack {
-                            Text("12월 한 달 동안\n이렇게 달라졌어요")
-                                .font(style: .moneygraphy, size: 32)
+                            Text("축하드려요! 🏅\n이만큼의\n목표를 달성했어요")
+                                .font(style: .moneygraphy, size: 40)
                                 .foregroundStyle(.white)
                             
                             Spacer()
                         }
-                        .padding(.horizontal, 80)
+                        .padding(.horizontal, 30)
                         
-                        ZStack {
-//                            Image(.presentOpen)
-//                                .resizable()
-//                                .aspectRatio(contentMode: .fit)
-//                                .frame(maxWidth: .infinity)
-                            
-                            Image(.presentbox)
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .frame(width: UIScreen.main.bounds.width + 120)
-                            
-                            Text("테스트 글입니다. Enfnfnfnfnfnnffnnfasdasdasdas")
-                                .font(style: .moneygraphy, size: 18)
-                                .multilineTextAlignment(.center)
-                                .lineLimit(4)
-                                .padding(.horizontal, 150)
-                        }
+                        Spacer()
                     }
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .ignoresSafeArea(edges: .bottom)
-                    
-                    
-                    VStack {
-                        Text("확인했어요")
-                            .font(style: .moneygraphy, size: 18)
+                    .onAppear {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                            withAnimation {
+                                animating.toggle()
+                            }
+                        }
                     }
-                    .foregroundStyle(.white)
-                    .frame(maxWidth: .infinity)
-                    .frame(height: 55)
-                    .background(Color(DFColor.PointColor.point1.color))
-                    .asButton {
-                        
-                    }
-                    .clipShape(RoundedRectangle(cornerRadius: 12))
-                    .padding(.bottom, 12)
-                    .padding(.horizontal, 80)
                 }
+                
+            }
+            .overlay {
+                VStack {
+                    if animating {
+                        ZStack(alignment: .bottom) {
+                            VStack {
+                                
+                                HStack {
+                                    Text("12월 한 달 동안\n이렇게 달라졌어요")
+                                        .font(style: .moneygraphy, size: 32)
+                                        .foregroundStyle(.white)
+                                    
+                                    Spacer()
+                                }
+                                .padding(.horizontal, 80)
+                                
+                                ZStack {
+                                    
+                                    Image(.presentbox)
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fit)
+                                        .frame(width: UIScreen.main.bounds.width + 110)
+                                    
+                                        
+                                    Text("그동안 열심히 공부해서 최고의 개발자가 되려고 하시는군요!")
+                                        .font(style: .moneygraphy, size: 22)
+                                        .multilineTextAlignment(.center)
+                                        .lineLimit(4)
+                                        .padding(.horizontal, 150)
+                                }
+                                
+                                
+                            }
+                            .frame(maxWidth: .infinity, maxHeight: .infinity)
+                            .ignoresSafeArea(edges: .bottom)
+                            
+                            
+                            VStack {
+                                Text("확인했어요")
+                                    .font(style: .moneygraphy, size: 18)
+                            }
+                            .foregroundStyle(.white)
+                            .frame(maxWidth: .infinity)
+                            .frame(height: 55)
+                            .background(Color(DFColor.PointColor.point1.color))
+                            .asButton {
+                                
+                            }
+                            .clipShape(RoundedRectangle(cornerRadius: 12))
+                            .padding(.bottom, 60)
+                            .padding(.horizontal, 80)
+                        }
+                        .frame(width: UIScreen.main.bounds.width)
+                    }
+                }
+                .frame(width: UIScreen.main.bounds.width)
+                .frame(height: UIScreen.main.bounds.height)
+//                .background(.red)
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -90,12 +114,6 @@ struct RandomTextBoxAnimationView: View {
             withAnimation {
                 isAnimating = .on
             }
-            // 일정 시간 후 텍스트 박스 사라지기
-//            DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-//                withAnimation(.ease) {
-//                    isAnimating = .out // 애니메이션 종료
-//                }
-//            }
         }
         .background {
             ZStack {

@@ -26,10 +26,10 @@ struct GiftDayView: View {
                         
                         HStack(alignment: .top) {
                             LazyVGrid(columns: gridItems) {
-                                randomMode(bool: true)
+                                randomMode(bool: false)
                             }
                             LazyVGrid(columns: gridItems) {
-                                randomMode(bool: false)
+                                randomMode(bool: true)
                             }
                         }
                     }
@@ -93,7 +93,9 @@ extension GiftDayView {
                 .asButton {
                     store.send(.viewEvent(.touchBox(index)))
                 }
-                Text(String(index))
+                Text(String(index + 1))
+                    .font(style: .moneygraphy, size: 40)
+                    .foregroundStyle(.black)
             }
         }
     }
@@ -120,7 +122,7 @@ extension GiftDayView {
         if total == 0 {
             return (odds, evens)
         }
-        for i in 1...total {
+        for i in 0..<total {
             if i % 2 == 0 {
                 evens.append(i) // 짝수일 때
             } else {

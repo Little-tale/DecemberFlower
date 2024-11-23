@@ -15,8 +15,19 @@ struct PurposeDTO: DTO {
     let createdAt: String
 }
 
+struct PurposeDTO2: DTO {
+    let title: String
+    let description: String
+    let status: String
+    let number: Int
+}
+
 struct PurposeDataDTO: DTO {
     let data: PurposeList
+}
+
+struct PurposeDataDTO2: DTO {
+    let data: PurposeDTO2
 }
 
 struct PurposeList: DTO {

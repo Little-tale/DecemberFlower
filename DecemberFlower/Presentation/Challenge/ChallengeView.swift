@@ -60,19 +60,19 @@ struct ChallengeView: View {
         WithPerceptionTracking {
             ScrollView {
                 
-                WithPerceptionTracking {
-                    VStack {
-                        HStack {
-                            Text(DFText.ChallengeText.setPurpose)
-                                .font(style: .moneygraphy, size: 36)
-                            Spacer()
-                        }
-                        .padding(.leading, 10)
-                        .padding(.bottom, 15)
-                        .foregroundStyle(.white)
-                        
-                        ForEach(TextViewCase.allCases, id: \.self) { textViewCase in
-                            
+                
+                VStack {
+                    HStack {
+                        Text(DFText.ChallengeText.setPurpose)
+                            .font(style: .moneygraphy, size: 36)
+                        Spacer()
+                    }
+                    .padding(.leading, 10)
+                    .padding(.bottom, 15)
+                    .foregroundStyle(.white)
+                    
+                    ForEach(TextViewCase.allCases, id: \.self) { textViewCase in
+                        WithPerceptionTracking {
                             HStack {
                                 Text(textViewCase.title)
                                     .font(style: .moneygraphy, size: 18)
@@ -88,9 +88,9 @@ struct ChallengeView: View {
                                     .frame(height: 200)
                                     .clipShape(RoundedRectangle(cornerRadius: 10))
                                     .padding(.horizontal, 10)
-                            
+                                
                                 bottomView(current: textViewCase)
-                                    .foregroundStyle(store.state.titleIsValid ? .clear : .red)
+                                    .foregroundStyle(store.state.titleIsValid ? .gray : .red)
                             case .detail:
                                 DFTextView(text: $store.detailText.sending(\.detailTextBinding), backgroundColor: Color(DFColor.GrayColor.textView.color), placeHolder: textViewCase.placeHolder)
                                     .frame(height: 200)
@@ -98,7 +98,7 @@ struct ChallengeView: View {
                                     .padding(.horizontal, 10)
                                 
                                 bottomView(current: textViewCase)
-                                    .foregroundStyle(store.state.titleIsValid ? .clear : .red)
+                                    .foregroundStyle(store.state.titleIsValid ? .gray : .red)
                             }
                             
                             
@@ -112,10 +112,16 @@ struct ChallengeView: View {
                     }
                     .frame(maxWidth: .infinity)
                     .frame(height: 50)
-        //            .background(DFColor.PointColor.point1) // 조건에 따른 색 변경알아서
-                    .background(Color(DFColor.PointColor.point1.color))
+                    .asButton(action: {
+                        if store.state.allIsValid {
+                            store.send(.viewEvent(.buttonTapped))
+                        }
+                    })
+                    //            .background(DFColor.PointColor.point1) // 조건에 따른 색 변경알아서
+                    .background(store.allIsValid ? Color(DFColor.PointColor.point1.color) : Color(DFColor.GrayColor.textView.color))
                     .clipShape(RoundedRectangle(cornerRadius: 8))
                     .padding(.horizontal, 10)
+                    
                 }
                 
                 
@@ -145,8 +151,12 @@ struct ChallengeView: View {
             let text = isTitle ? DFText.ChallengeText.warningTitle : DFText.ChallengeText.warningDetail
             let count = isTitle ? store.state.titleCount : store.state.detailCount
             let limit = isTitle ? store.state.titleLimit : store.state.detailLimit
+            let type = isTitle ? store.titleIsValid : store.detailIsValid
             
             Text(text)
+                .foregroundStyle(type ? .clear : Color(DFColor.GrayColor.textView.color))
+            Spacer()
+            Text("\(count)/\(limit)")
         }
     }
 }

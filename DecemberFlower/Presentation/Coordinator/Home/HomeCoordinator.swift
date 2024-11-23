@@ -13,6 +13,7 @@ import ComposableArchitecture
 enum HomeScreen {
     case giftDay(GiftDayViewFeature)
     case challenge(ChallengeViewFeature)
+    case dfResult(DFResultViewFeature)
 }
 
 @Reducer
@@ -33,8 +34,20 @@ struct HomeCoordinator: Reducer {
         
         Reduce { state, action in
             switch action {
-            case let .router(.routeAction(id: .giftDay, action: .giftDay(.delegate(.touchBox(data))))):
-                state.routes.push(.challenge(ChallengeViewFeature.State(purposeData: data)))
+            case let .router(.routeAction(id: .giftDay, action: .giftDay(.delegate(.touchBox(data, isValid))))):
+                if isValid {
+                    state.routes.push(.dfResult(DFResultViewFeature.State(purposeData: data)))
+                } else {
+                    state.routes.push(.challenge(ChallengeViewFeature.State(purposeData: data)))
+                }
+                
+            case let .router(.routeAction(id: .challenge, action: .challenge(.delegate(.makeSuccess(isValid))))):
+                if isValid {
+                    state.routes.goBackToRoot()
+                }
+                
+            case .router(.routeAction(id: .giftDay, action: .giftDay(.parentAction(.onAppear)))):
+                return .send(.router(.routeAction(id: .giftDay, action: .giftDay(.parentAction(.onAppear)))))
                 
             default:
                 break

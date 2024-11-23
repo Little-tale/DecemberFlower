@@ -19,8 +19,10 @@ extension GiftDayRepository {
         return dtoToEntity(data.data.challengeList)
     }
     
-    func pushPurpose(data: PurposeEntity) async throws {
-        try await network.requestNetwork(dto: PurposeDTO.self, router: GiftDayRouter.pushPurpose(purpose: data))
+    // 푸시
+    func pushPurpose(data: PurposeEntity) async throws -> Bool {
+        let result = try await network.requestNetwork(dto: PurposeDataDTO2.self, router: GiftDayRouter.pushPurpose(purpose: data, challengeDay: data.number))
+        return true
     }
 }
 

@@ -7,8 +7,11 @@
 
 import SwiftUI
 import PopupView
+import ComposableArchitecture
 
 struct DFResultView: View {
+    
+    @Perception.Bindable var store: StoreOf<DFResultViewFeature>
     
     @State var text: String = "asdakjsdklasjdkl"
     @State var success: Bool = false
@@ -18,7 +21,7 @@ struct DFResultView: View {
         ZStack(alignment: .bottom) {
             VStack {
                 HStack {
-                    Text("2000년헬스장오늘어깨랑하체함0000") // 이거
+                    Text(store.purposeData.title) // 이거
                         .font(style: .moneygraphy, size: 32)
                         .lineLimit(3)
                         .foregroundStyle(.white)
@@ -28,7 +31,7 @@ struct DFResultView: View {
                     Spacer()
                 }
                 // 바인딩 처리하되 수정 안됨 ->
-                DFTextView(text: $text, backgroundColor: Color(DFColor.GrayColor.textView.color), placeHolder: "")
+                DFTextView(text: $store.purposeData.details.sending(\.detailTextBinding), backgroundColor: Color(DFColor.GrayColor.textView.color), placeHolder: "")
                     .frame(height: 260)
                     .clipShape(RoundedRectangle(cornerRadius: 12))
                     .overlay {
@@ -38,30 +41,43 @@ struct DFResultView: View {
                     }
                     .padding(.bottom, 20)
                 
-                Text("오늘 목표를 완료하였습니다.") // 조건에 따름
-                    .font(style: .moneygraphy, size: 16)
-                    .foregroundStyle(.white) // 조건에 따름
-                
+                if store.state.purposeData.isValid {
+                    if store.state.purposeData.first {
+                        Text("목표를 달성할 수록 좋은 일이 생길거에요!")
+                            .font(style: .moneygraphy, size: 16)
+                            .foregroundStyle(.yellow)
+                    } else {
+                        Text("목표를 달성이 어렵다면 가볍게라도 도전해보세요!")
+                            .font(style: .moneygraphy, size: 16)
+                            .foregroundStyle(Color(DFColor.PointColor.point1.color))
+                    }
+                } else {
+                    Text("목표를 달성이 어렵다면 가볍게라도 도전해보세요!")
+                        .font(style: .moneygraphy, size: 16)
+                        .foregroundStyle(Color(DFColor.PointColor.point1.color))
+                }
                 
                 Spacer()
             }
             .padding(.horizontal, 20)
             
-            VStack {
-                Text("오늘 목표를 완료했어요!")
-                    .font(style: .moneygraphy, size: 18)
+            if store.state.purposeData.first {
+                VStack {
+                    Text("오늘 목표를 완료했어요!")
+                        .font(style: .moneygraphy, size: 18)
+                }
+                .frame(maxWidth: .infinity)
+                .frame(height: 50)
+                .background(Color(DFColor.PointColor.point1.color)) // 조건에 따를
+                .asButton {
+                    // 로직 처리
+                    success = true
+                }
+                .foregroundStyle(.white) // 조건에 따름
+                .clipShape(RoundedRectangle(cornerRadius: 8))
+                .padding(.horizontal, 30)
+                .padding(.bottom, 10)
             }
-            .frame(maxWidth: .infinity)
-            .frame(height: 50)
-            .background(Color(DFColor.PointColor.point1.color)) // 조건에 따를
-            .asButton {
-                // 로직 처리
-                success = true
-            }
-            .foregroundStyle(.white) // 조건에 따름
-            .clipShape(RoundedRectangle(cornerRadius: 8))
-            .padding(.horizontal, 30)
-            .padding(.bottom, 10)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background {
@@ -114,6 +130,6 @@ struct DFResultView: View {
  
  */
 
-#Preview {
-    DFResultView()
-}
+//#Preview {
+//    DFResultView()
+//}

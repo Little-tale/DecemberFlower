@@ -15,6 +15,8 @@ struct DecemberFlowerApp: App {
             RootCoordinatorView(store: Store(initialState: RootCoordinator.State.initialState, reducer: {
                 RootCoordinator()
             }))
+            
+//            RandomTextBoxAnimationView(count: 31)
         }
     }
 }

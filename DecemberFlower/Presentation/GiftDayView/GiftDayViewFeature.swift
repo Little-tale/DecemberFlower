@@ -24,7 +24,12 @@ struct GiftDayViewFeature: _Reducer {
         
         case delegate(Delegate)
         enum Delegate {
-            case touchBox(PurposeEntity)
+            case touchBox(PurposeEntity, Bool)
+        }
+        
+        case parentAction(ParentAction)
+        enum ParentAction {
+            case onAppear
         }
     }
     
@@ -59,7 +64,7 @@ struct GiftDayViewFeature: _Reducer {
                 
             case let .viewEvent(.touchBox(index)):
                 return .run { [state = state] send in
-                    await send(.delegate(.touchBox(state.datas[index])))
+                    await send(.delegate(.touchBox(state.datas[index], state.datas[index].isValid)))
                 }
                 
             case .network(.giftDatas):
@@ -72,14 +77,23 @@ struct GiftDayViewFeature: _Reducer {
             case .dataTrans(.emptyData):
                 var items: [PurposeEntity] = []
                 
-                for index in 1...31 {
+                for index in 0..<31 {
                     items.append(PurposeEntity(title: "", details: "", number: index, isValid: false, createdAt: Date()))
                 }
                 state.datas = items
                 
             case let .dataTrans(.giftDatas(datas)):
-                for data in datas {
-                    state.datas[data.number-1] = data
+                if !state.datas.isEmpty {
+                   
+                    for data in datas {
+                        state.datas[data.number] = data
+                    }
+                }
+            
+                
+            case .parentAction(.onAppear):
+                return .run { send in
+                    await send(.viewCycle(.onAppear))
                 }
                 
             default:
