@@ -23,12 +23,14 @@ struct DFTextView: View {
                 if text.isEmpty {
                     Text(placeHolder)
                         .foregroundColor(.white.opacity(0.5))
+                        .font(style: .moneygraphy, size: 18)
                         .padding(.horizontal, 14)
                         .padding(.top, 14)
                 }
                 
                 // 텍스트 입력 필드
                 TextEditor(text: $text)
+                    .font(Font(DFFont.moneygraphy.font(size: 18)))
                     .foregroundColor(.white)
                     .padding(8)
                     .frame(maxHeight: .infinity)
