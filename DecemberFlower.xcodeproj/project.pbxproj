@@ -6,8 +6,13 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		7BB376022CF1ABE10065EE7F /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 7BB376012CF1ABE10065EE7F /* .gitignore */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		7BB375EE2CF1AB880065EE7F /* DecemberFlower.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DecemberFlower.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		7BB376012CF1ABE10065EE7F /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -32,6 +37,7 @@
 		7BB375E52CF1AB880065EE7F = {
 			isa = PBXGroup;
 			children = (
+				7BB376012CF1ABE10065EE7F /* .gitignore */,
 				7BB375F02CF1AB880065EE7F /* DecemberFlower */,
 				7BB375EF2CF1AB880065EE7F /* Products */,
 			);
@@ -109,6 +115,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7BB376022CF1ABE10065EE7F /* .gitignore in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
