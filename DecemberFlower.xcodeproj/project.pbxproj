@@ -8,6 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		7BB376022CF1ABE10065EE7F /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 7BB376012CF1ABE10065EE7F /* .gitignore */; };
+		7BB376122CF1ACB60065EE7F /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = 7BB376112CF1ACB60065EE7F /* ComposableArchitecture */; };
+		7BB376152CF1ACC00065EE7F /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 7BB376142CF1ACC00065EE7F /* Kingfisher */; };
+		7BB376182CF1ACD70065EE7F /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 7BB376172CF1ACD70065EE7F /* Alamofire */; };
+		7BB3761B2CF1ACEA0065EE7F /* TCACoordinators in Frameworks */ = {isa = PBXBuildFile; productRef = 7BB3761A2CF1ACEA0065EE7F /* TCACoordinators */; };
+		7BB3761E2CF1AD220065EE7F /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = 7BB3761D2CF1AD220065EE7F /* Realm */; };
+		7BB376202CF1AD220065EE7F /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 7BB3761F2CF1AD220065EE7F /* RealmSwift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +34,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7BB376202CF1AD220065EE7F /* RealmSwift in Frameworks */,
+				7BB376182CF1ACD70065EE7F /* Alamofire in Frameworks */,
+				7BB376152CF1ACC00065EE7F /* Kingfisher in Frameworks */,
+				7BB3761B2CF1ACEA0065EE7F /* TCACoordinators in Frameworks */,
+				7BB376122CF1ACB60065EE7F /* ComposableArchitecture in Frameworks */,
+				7BB3761E2CF1AD220065EE7F /* Realm in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -71,6 +83,12 @@
 			);
 			name = DecemberFlower;
 			packageProductDependencies = (
+				7BB376112CF1ACB60065EE7F /* ComposableArchitecture */,
+				7BB376142CF1ACC00065EE7F /* Kingfisher */,
+				7BB376172CF1ACD70065EE7F /* Alamofire */,
+				7BB3761A2CF1ACEA0065EE7F /* TCACoordinators */,
+				7BB3761D2CF1AD220065EE7F /* Realm */,
+				7BB3761F2CF1AD220065EE7F /* RealmSwift */,
 			);
 			productName = DecemberFlower;
 			productReference = 7BB375EE2CF1AB880065EE7F /* DecemberFlower.app */;
@@ -100,6 +118,13 @@
 			);
 			mainGroup = 7BB375E52CF1AB880065EE7F;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				7BB376102CF1ACB60065EE7F /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
+				7BB376132CF1ACC00065EE7F /* XCRemoteSwiftPackageReference "Kingfisher" */,
+				7BB376162CF1ACD70065EE7F /* XCRemoteSwiftPackageReference "Alamofire" */,
+				7BB376192CF1ACEA0065EE7F /* XCRemoteSwiftPackageReference "TCACoordinators" */,
+				7BB3761C2CF1AD220065EE7F /* XCRemoteSwiftPackageReference "realm-swift" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 7BB375EF2CF1AB880065EE7F /* Products */;
 			projectDirPath = "";
@@ -331,6 +356,82 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		7BB376102CF1ACB60065EE7F /* XCRemoteSwiftPackageReference "swift-composable-architecture" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/pointfreeco/swift-composable-architecture.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.16.1;
+			};
+		};
+		7BB376132CF1ACC00065EE7F /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 8.1.1;
+			};
+		};
+		7BB376162CF1ACD70065EE7F /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.10.1;
+			};
+		};
+		7BB376192CF1ACEA0065EE7F /* XCRemoteSwiftPackageReference "TCACoordinators" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/johnpatrickmorgan/TCACoordinators";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.10.1;
+			};
+		};
+		7BB3761C2CF1AD220065EE7F /* XCRemoteSwiftPackageReference "realm-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/realm/realm-swift.git";
+			requirement = {
+				kind = exactVersion;
+				version = 10.54.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		7BB376112CF1ACB60065EE7F /* ComposableArchitecture */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7BB376102CF1ACB60065EE7F /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
+			productName = ComposableArchitecture;
+		};
+		7BB376142CF1ACC00065EE7F /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7BB376132CF1ACC00065EE7F /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
+		};
+		7BB376172CF1ACD70065EE7F /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7BB376162CF1ACD70065EE7F /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
+		};
+		7BB3761A2CF1ACEA0065EE7F /* TCACoordinators */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7BB376192CF1ACEA0065EE7F /* XCRemoteSwiftPackageReference "TCACoordinators" */;
+			productName = TCACoordinators;
+		};
+		7BB3761D2CF1AD220065EE7F /* Realm */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7BB3761C2CF1AD220065EE7F /* XCRemoteSwiftPackageReference "realm-swift" */;
+			productName = Realm;
+		};
+		7BB3761F2CF1AD220065EE7F /* RealmSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7BB3761C2CF1AD220065EE7F /* XCRemoteSwiftPackageReference "realm-swift" */;
+			productName = RealmSwift;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 7BB375E62CF1AB880065EE7F /* Project object */;
 }
