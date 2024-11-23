@@ -13,6 +13,7 @@
 		7BB376182CF1ACD70065EE7F /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 7BB376172CF1ACD70065EE7F /* Alamofire */; };
 		7BB3761B2CF1ACEA0065EE7F /* TCACoordinators in Frameworks */ = {isa = PBXBuildFile; productRef = 7BB3761A2CF1ACEA0065EE7F /* TCACoordinators */; };
 		7BB376232CF1ADE40065EE7F /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 7BB376222CF1ADE40065EE7F /* RealmSwift */; };
+		7BB377122CF229B10065EE7F /* PopupView in Frameworks */ = {isa = PBXBuildFile; productRef = 7BB377112CF229B10065EE7F /* PopupView */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -46,6 +47,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7BB377122CF229B10065EE7F /* PopupView in Frameworks */,
 				7BB376182CF1ACD70065EE7F /* Alamofire in Frameworks */,
 				7BB376152CF1ACC00065EE7F /* Kingfisher in Frameworks */,
 				7BB3761B2CF1ACEA0065EE7F /* TCACoordinators in Frameworks */,
@@ -99,6 +101,7 @@
 				7BB376172CF1ACD70065EE7F /* Alamofire */,
 				7BB3761A2CF1ACEA0065EE7F /* TCACoordinators */,
 				7BB376222CF1ADE40065EE7F /* RealmSwift */,
+				7BB377112CF229B10065EE7F /* PopupView */,
 			);
 			productName = DecemberFlower;
 			productReference = 7BB375EE2CF1AB880065EE7F /* DecemberFlower.app */;
@@ -134,6 +137,7 @@
 				7BB376162CF1ACD70065EE7F /* XCRemoteSwiftPackageReference "Alamofire" */,
 				7BB376192CF1ACEA0065EE7F /* XCRemoteSwiftPackageReference "TCACoordinators" */,
 				7BB376212CF1ADE40065EE7F /* XCRemoteSwiftPackageReference "realm-swift" */,
+				7BB377102CF229B10065EE7F /* XCRemoteSwiftPackageReference "PopupView" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 7BB375EF2CF1AB880065EE7F /* Products */;
@@ -420,6 +424,14 @@
 				version = 10.54.0;
 			};
 		};
+		7BB377102CF229B10065EE7F /* XCRemoteSwiftPackageReference "PopupView" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/exyte/PopupView";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.1.4;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -447,6 +459,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 7BB376212CF1ADE40065EE7F /* XCRemoteSwiftPackageReference "realm-swift" */;
 			productName = RealmSwift;
+		};
+		7BB377112CF229B10065EE7F /* PopupView */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7BB377102CF229B10065EE7F /* XCRemoteSwiftPackageReference "PopupView" */;
+			productName = PopupView;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

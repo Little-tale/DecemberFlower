@@ -32,6 +32,8 @@ enum DFColor {
         case gray200
         case gray100
         case textView
+        case alertButton
+        case alertBackground
         
         var color: UIColor {
             switch self {
@@ -43,6 +45,10 @@ enum DFColor {
                 return UIColor(hexCode: "FBFBFB")
             case .textView:
                 return UIColor(hexCode: "404040")
+            case .alertButton:
+                return UIColor(hexCode: "4E4E4E")
+            case .alertBackground:
+                return UIColor(hexCode: "393939")
             }
         }
     }
