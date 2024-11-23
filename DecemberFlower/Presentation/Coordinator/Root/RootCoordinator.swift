@@ -18,15 +18,18 @@ enum RootScreen {
 struct RootCoordinator: Reducer {
     
     @ObservableState
-    struct State: Equatable, Sendable {
-        static let initialState = State(routes: [.root(.onboarding(OnboardingViewFeature.State()), embedInNavigationView: true)])
+    struct State: Equatable {
+        static let initialState = State(routes: [.root(.onboarding(OnboardingViewFeature.State()), embedInNavigationView: false)])
         
         var routes: IdentifiedArrayOf<Route<RootScreen.State>>
         var viewState: RootCoordinatorViewState = .start
+        var homeCoordinator: HomeCoordinator.State = HomeCoordinator.State.initialState
     }
 
     enum Action {
         case router(IdentifiedRouterActionOf<RootScreen>)
+        
+        case homeCoordinatorAction(HomeCoordinator.Action)
     }
     
     enum RootCoordinatorViewState: Equatable {
@@ -35,10 +38,13 @@ struct RootCoordinator: Reducer {
     }
     
     var body: some ReducerOf<Self> {
+        Scope(state: \.homeCoordinator, action: \.homeCoordinatorAction) {
+            HomeCoordinator()
+        }
         
         Reduce { state, action in
             switch action {
-            case let .router(.routeAction(id: _, action: .onboarding(.delegate(.isFirstUser(trigger))))):
+            case let .router(.routeAction(id: .onboarding, action: .onboarding(.delegate(.isFirstUser(trigger))))):
                 if trigger {
                     state.routes.push(.onboarding(OnboardingViewFeature.State()))
                 } else {

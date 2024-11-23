@@ -13,7 +13,7 @@ struct GiftDayViewFeature: _Reducer {
     
     @ObservableState
     struct State: Equatable {
-        var datas: [String] = (1...31).map { String($0) }
+        var datas: [PurposeEntity] = Array(repeating: PurposeEntity(title: "", detail: ""), count: 31)
     }
     
     enum Action {
@@ -21,6 +21,11 @@ struct GiftDayViewFeature: _Reducer {
         case viewEvent(ViewEventType)
         case dataTrans(DataTransType)
         case network(NetworkType)
+        
+        case delegate(Delegate)
+        enum Delegate {
+            case touchBox
+        }
     }
     
     enum ViewCycleType {
@@ -32,7 +37,7 @@ struct GiftDayViewFeature: _Reducer {
     }
     
     enum DataTransType {
-        case giftDatas(TestDTO)
+        case giftDatas([PurposeEntity])
     }
     
     enum NetworkType {
@@ -57,8 +62,7 @@ struct GiftDayViewFeature: _Reducer {
                 }
                 
             case let .dataTrans(.giftDatas(data)):
-                state.datas = [""]
-                
+                state.datas = data
                 
             default:
                 break

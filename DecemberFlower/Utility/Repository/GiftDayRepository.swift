@@ -10,17 +10,28 @@ import ComposableArchitecture
 
 final class GiftDayRepository: @unchecked Sendable {
     @Dependency(\.networkManager) var network
-//    @Dependency(\.characterMapper) var mapper
 }
 
 extension GiftDayRepository {
-    func fetchPurposeList() async throws -> TestDTO {
-        try await network.requestNetwork(dto: TestDTO.self, router: GiftDayRouter.fetchPurposeList)
+    func fetchPurposeList() async throws -> [PurposeEntity] {
+        let data = try await network.requestNetwork(dto: DTOList<PurposeDTO>.self, router: GiftDayRouter.fetchPurposeList)
+        
+        return dtoToEntity(data.elements)
+    }
+    
+    func pushPurpose(data: PurposeEntity) async throws {
+        try await network.requestNetwork(dto: PurposeDTO.self, router: GiftDayRouter.pushPurpose(purpose: data))
     }
 }
 
-struct TestDTO: DTO {
+extension GiftDayRepository {
+    private func dtoToEntity(_ dtos: [PurposeDTO]) -> [PurposeEntity] {
+        return dtos.map { dtoToEntity($0) }
+    }
     
+    private func dtoToEntity(_ dto: PurposeDTO) -> PurposeEntity {
+        return PurposeEntity(title: dto.title, detail: dto.detail)
+    }
 }
 
 extension GiftDayRepository: DependencyKey {

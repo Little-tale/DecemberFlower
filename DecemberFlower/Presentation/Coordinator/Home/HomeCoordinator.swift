@@ -11,26 +11,33 @@ import ComposableArchitecture
 
 @Reducer(state: .equatable)
 enum HomeScreen {
-    
+    case giftDay(GiftDayViewFeature)
+    case challenge(ChallengeViewFeature)
 }
 
 @Reducer
 struct HomeCoordinator: Reducer {
     
     @ObservableState
-    struct State: Equatable, Sendable {
-
+    struct State: Equatable {
+        static let initialState = State(routes: [.root(.giftDay(GiftDayViewFeature.State()), embedInNavigationView: true)])
+        
+        var routes: IdentifiedArrayOf<Route<HomeScreen.State>>
     }
 
     enum Action {
-        
+        case router(IdentifiedRouterActionOf<HomeScreen>)
     }
     
     var body: some ReducerOf<Self> {
         
         Reduce { state, action in
+            switch action {
+            default:
+                break
+            }
             return .none
         }
-//        .forEachRoute(\.routes, action: \.router)
+        .forEachRoute(\.routes, action: \.router)
     }
 }

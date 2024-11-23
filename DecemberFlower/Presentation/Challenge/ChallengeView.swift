@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import ComposableArchitecture
 
 enum TextViewCase: CaseIterable {
     case title
@@ -16,16 +17,16 @@ enum TextViewCase: CaseIterable {
         case .title:
             return "목표 제목"
         case .detail:
-            return "자세한 목표 제공"
+            return DFText.ChallengeText.titleDetail
         }
     }
     
     var placeHolder: String {
         switch self {
         case .title:
-            return "물 1잔 마시기와 같은 가벼운 목표도 좋아요"
+            return DFText.ChallengeText.placeTitle
         case .detail:
-            return "자세한 내용은 작성하지 않으셔도 괜찮아요. (선택사항)"
+            return DFText.ChallengeText.placeDetail
         }
     }
     
@@ -50,6 +51,8 @@ enum TextViewCase: CaseIterable {
 
 struct ChallengeView: View {
     
+    @Perception.Bindable var store: StoreOf<ChallengeViewFeature>
+    
     @State private var text: String = "" // 사용자 입력 값을 저장
     let characterLimit = 300 // 문자 제한
     
@@ -58,7 +61,7 @@ struct ChallengeView: View {
             
             VStack {
                 HStack {
-                    Text("오늘의\n목표를 정해보세요")
+                    Text(DFText.ChallengeText.setPurpose)
                         .font(style: .moneygraphy, size: 36)
                     Spacer()
                 }
@@ -67,6 +70,7 @@ struct ChallengeView: View {
                 .foregroundStyle(.white)
                 
                 ForEach(TextViewCase.allCases, id: \.self) { textViewCase in
+                    
                     HStack {
                         Text(textViewCase.title)
                             .font(style: .moneygraphy, size: 18)
@@ -76,18 +80,33 @@ struct ChallengeView: View {
                     .padding(.leading, 10)
                     .padding(.vertical, 3)
                     
-                    DFTextView(text: $text, backgroundColor: Color(DFColor.GrayColor.textView.color), placeHolder: textViewCase.placeHolder)
-                        .frame(height: 200)
-                        .clipShape(RoundedRectangle(cornerRadius: 10))
-                        .padding(.horizontal, 10)
-                    bottomView(current: textViewCase)
+                    switch textViewCase {
+                    case .title:
+                        DFTextView(text: $store.titleText.sending(\.titleTextBinding), backgroundColor: Color(DFColor.GrayColor.textView.color), placeHolder: textViewCase.placeHolder)
+                            .frame(height: 200)
+                            .clipShape(RoundedRectangle(cornerRadius: 10))
+                            .padding(.horizontal, 10)
+                    
+                        bottomView(current: textViewCase)
+                            .foregroundStyle(store.state.titleIsValid ? .clear : .red)
+                    case .detail:
+                        DFTextView(text: $store.detailText.sending(\.detailTextBinding), backgroundColor: Color(DFColor.GrayColor.textView.color), placeHolder: textViewCase.placeHolder)
+                            .frame(height: 200)
+                            .clipShape(RoundedRectangle(cornerRadius: 10))
+                            .padding(.horizontal, 10)
+                        
+                        bottomView(current: textViewCase)
+                            .foregroundStyle(store.state.titleIsValid ? .clear : .red)
+                    }
+                    
+                    
                 }
             }
             
             VStack {
-                Text("이렇게 목표 설정할께요")
+                Text(DFText.ChallengeText.completePurpose)
                     .font(style: .moneygraphy, size: 18)
-                    .foregroundStyle(.white) // 조건에 따른 색 변경알아서
+                    .foregroundStyle(store.allIsValid ? .white : .gray) // 조건에 따른 색 변경알아서
             }
             .frame(maxWidth: .infinity)
             .frame(height: 50)
@@ -111,7 +130,12 @@ struct ChallengeView: View {
     private func bottomView(current: TextViewCase) -> some View {
         HStack {
             // 피처에서 각 케이스가 true false 에 따른 처리 ( 븀보시면 암 위에것도 처리)
-            Text("여기에 경고 문구")
+            let isTitle = current == .title
+            let text = isTitle ? DFText.ChallengeText.warningTitle : DFText.ChallengeText.warningDetail
+            let count = isTitle ? store.state.titleCount : store.state.detailCount
+            let limit = isTitle ? store.state.titleLimit : store.state.detailLimit
+            
+            Text(text)
         }
     }
 }
@@ -120,8 +144,8 @@ struct ChallengeView: View {
 
 
 
-#if DEBUG
-#Preview {
-    ChallengeView()
-}
-#endif
+//#if DEBUG
+//#Preview {
+//    ChallengeView()
+//}
+//#endif

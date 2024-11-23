@@ -12,7 +12,7 @@ struct GiftDayView: View {
     
     @Perception.Bindable var store: StoreOf<GiftDayViewFeature>
     
-    private var gridItems: [GridItem] = [GridItem(.flexible())]
+    var gridItems: [GridItem] = [GridItem(.flexible())]
     
     var body: some View {
         ZStack {
@@ -87,7 +87,7 @@ extension GiftDayView {
                 .asButton {
                     
                 }
-                Text(store.state.datas[index - 1])
+                Text(store.state.datas[index - 1].title)
             }
         }
     }

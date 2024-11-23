@@ -6,12 +6,15 @@
 //
 
 import SwiftUI
+import ComposableArchitecture
 
 @main
 struct DecemberFlowerApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            RootCoordinatorView(store: Store(initialState: RootCoordinator.State.initialState, reducer: {
+                RootCoordinator()
+            }))
         }
     }
 }

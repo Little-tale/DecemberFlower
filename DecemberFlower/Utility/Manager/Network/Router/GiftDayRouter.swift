@@ -10,6 +10,7 @@ import Alamofire
 
 enum GiftDayRouter: Router {
     case fetchPurposeList
+    case pushPurpose(purpose: PurposeEntity)
 }
 
 extension GiftDayRouter {
@@ -17,19 +18,21 @@ extension GiftDayRouter {
         switch self {
         case .fetchPurposeList:
             return .get
+        case .pushPurpose:
+            return .post
         }
     }
     
     var path: String {
         switch self {
-        case .fetchPurposeList:
+        case .fetchPurposeList, .pushPurpose:
             return ""
         }
     }
     
     var optionalHeaders: HTTPHeaders? {
         switch self {
-        case .fetchPurposeList:
+        case .fetchPurposeList, .pushPurpose:
             return HTTPHeaders([
                 HTTPHeader(name: "Content-Type", value: "application/json")
             ])
@@ -38,21 +41,21 @@ extension GiftDayRouter {
     
     var parameters: Parameters? {
         switch self {
-        case .fetchPurposeList:
+        case .fetchPurposeList, .pushPurpose:
             return nil
         }
     }
     
     var body: Data? {
         switch self {
-        case .fetchPurposeList:
+        case .fetchPurposeList, .pushPurpose:
             return nil
         }
     }
     
     var encodingType: EncodingType {
         switch self {
-        case .fetchPurposeList:
+        case .fetchPurposeList, .pushPurpose:
             return .url
         }
     }
