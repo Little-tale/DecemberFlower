@@ -6,12 +6,13 @@
 //
 
 import SwiftUI
+import ComposableArchitecture
 
 struct GiftDayView: View {
     
-    private var gridItems: [GridItem] = [GridItem(.flexible())]
+    @Perception.Bindable var store: StoreOf<GiftDayViewFeature>
     
-    private let datas: [String] = (1...31).map { String($0) }
+    private var gridItems: [GridItem] = [GridItem(.flexible())]
     
     var body: some View {
         ZStack {
@@ -47,11 +48,13 @@ struct GiftDayView: View {
             .ignoresSafeArea(.all)
         }
     }
-    
+}
+
+extension GiftDayView {
     private var topView: some View {
         VStack {
             HStack {
-                Text("12월이에요!")
+                Text(DFText.GiftDayText.month)
                     .font(style: .moneygraphy, size: 40)
                     .multilineTextAlignment(.leading)
                     .padding(.bottom, 2)
@@ -59,7 +62,7 @@ struct GiftDayView: View {
                 Spacer()
             }
             HStack {
-                Text("오늘의 목표를 날짜 박스에 넣어주세요")
+                Text(DFText.GiftDayText.purpose)
                     .font(style:.moneygraphy, size: 20)
                     .multilineTextAlignment(.leading)
                     
@@ -73,7 +76,7 @@ struct GiftDayView: View {
     /// true = left
     /// false = right
     private func randomMode(bool: Bool) -> some View {
-        let count = datas.count
+        let count = store.state.datas.count
         let sideCount = calculateOddEvenNumbers(total: count)
         
         
@@ -84,7 +87,7 @@ struct GiftDayView: View {
                 .asButton {
                     
                 }
-                Text(datas[index - 1])
+                Text(store.state.datas[index - 1])
             }
         }
     }
@@ -105,7 +108,7 @@ struct GiftDayView: View {
         }
     }
     
-    func calculateOddEvenNumbers(total: Int) -> ([Int], [Int]) {
+    private func calculateOddEvenNumbers(total: Int) -> ([Int], [Int]) {
         var odds: [Int] = []
         var evens: [Int] = []
         
@@ -119,8 +122,6 @@ struct GiftDayView: View {
         return (odds, evens)
     }
 }
-
-
-#Preview {
-    GiftDayView()
-}
+//#Preview {
+//    GiftDayView()
+//}

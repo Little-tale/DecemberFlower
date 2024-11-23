@@ -11,6 +11,7 @@ import ComposableArchitecture
 @Reducer
 struct OnboardingViewFeature: _Reducer {
     
+    @ObservableState
     struct State: Equatable {
         let isFirstUser = false
     }
